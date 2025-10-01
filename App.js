@@ -1,63 +1,63 @@
-import { StyleSheet, View } from 'react-native'
-import Calculadora from './exercicio01/Calculadora'
-import Estilos from './exercicio02/Estilos'
-import Props from './exercicio3/Quadrado'
-import BotaoContator from './exercicio4/BotaoContator'
-import CardPessoa from './exercicio5/CardPessoa'
-import Axios from './exercicio6/Axios'
+import { useState } from 'react'
+import { StyleSheet,TextInput, View } from 'react-native'
 
 const App = () => {
+  var [id, setId] = useState()
+  var [posts, setPosts] = useState([])
+  var [coments, setComents] = useState([])
 
-  const dados = [
-      {
-          id: 1,
-          nome: 'joao',
-          email: 'j@gmail.com',
-      },
-      {
-          id: 2,
-          nome: 'pedro',
-          email: 'p@gmail.com',
-      },
-      {
-          id: 3,
-          nome: 'vitor',
-          email: 'v@gmail.com',
-      },
-      {
-          id: 4,
-          nome: 'leticia',
-          email: 'l@gmail.com',
-      },
-      {
-          id: 5,
-          nome: 'rait',
-          email: 'r@gmail.com',
-      }
-  ]
+  
+    var BuscarPostsPorId = async () => {
+      console.log('### inicio buscar ###')
+      var url = `https://jsonplaceholder.typicode.com/posts/${id}`
+      await axios.get(url).then((retorno) => {
+        console.log(retorno)
+        setPosts(retorno.data)
+      })
+  
+      console.log('### Fim buscar ###')
+    }
+
+    var BuscarComentsPorId = async () => {
+      console.log('### inicio buscar ###')
+      var url = `https://jsonplaceholder.typicode.com/posts/${id}/comments`
+      await axios.get(url).then((retorno) => {
+        console.log(retorno)
+        setComents(retorno.data)
+      })
+  
+      console.log('### Fim buscar ###')
+    }
+
 
   return (
     <View style={styles.container}>
-      {/* <Calculadora/> ex: 1*/} 
-      {/* <Estilos/> ex: 2*/}
-      {/* <Quadrado cor="blue" tamanho={100} texto="Azul" centralizado="center"/>
-          <Quadrado cor="red" tamanho={150} texto="Vermelho" centralizado="center"/>
-          <Quadrado cor="green" tamanho={60} texto="Verde" centralizado="center"/>
-          <Quadrado cor="purple" tamanho={300} texto="Roxo" centralizado="center"/>
-      ex: 3*/}
-      {/* <BotaoContator valor={1}/>
-      <BotaoContator valor={5}/>
-      <BotaoContator valor={10}/> ex: 4*/}
-      {/* <CardPessoa dados={dados}/> */}
-      <Axios/>
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeText}
+          value={text}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeNumber}
+          value={number}
+          placeholder="useless placeholder"
+          keyboardType="numeric"
+        />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff'
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
   },
 });
 
