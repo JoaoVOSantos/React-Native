@@ -1,13 +1,11 @@
 
 import { useState, useEffect } from 'react'
-import { StyleSheet, View, ScrollView } from 'react-native'
+import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native'
 import { useRoute, useNavigation } from '@react-navigation/native'
-import { TextInput, Button, Text, Card } from 'react-native-paper'
+import { Button, Text, Card } from 'react-native-paper'
 
 // material UI para o tratamento
 import {
-    Box,
-    LinearProgress,
     Alert
 } from '@mui/material'
 
@@ -197,12 +195,13 @@ const DetalheCards = () => {
                     >
                         Eventos
                     </Button>
+
                 </View>
 
                 {loading && (
-                    <Box sx={{ mb: 2, mt: 2 }}>
-                        <LinearProgress />
-                    </Box>
+                    <View style={{ marginVertical: 20 }}>
+                        <ActivityIndicator size="large" color="green" />
+                    </View>
                 )}
 
                 {/* // error escondido */}
@@ -221,6 +220,7 @@ const DetalheCards = () => {
 
 
                 {/* Card escondido, e quando tem dados gera cards mediante a quantidade no array, no caso da API o maximo é 20 */}
+                
                 {quadrinhos && quadrinhos.map((quadrinho) => (
                     <Card key={quadrinho.id} style={{ width: "400px", margin: 10 }}>
                         <Card.Content>
@@ -273,7 +273,7 @@ const DetalheCards = () => {
                             <Text variant="titleLarge">{evento.title}</Text>
                             <Text variant="bodyMedium">{evento.description || "Evento não possui descrição"}</Text>
 
-                        {evento.urls.map((url) => (
+                            {evento.urls.map((url) => (
                                 <View>
                                     <Text variant="bodyMedium"><a> {url.type} </a></Text>
                                     <Text variant="bodyMedium"><a> {url.url}</a></Text>
@@ -291,6 +291,14 @@ const DetalheCards = () => {
 
                     </Card>
                 ))}
+
+                <Button
+                        mode="contained"
+                        style={styles.buttonGoback}
+                        onPress={() => navigation.goBack()}
+                    >
+                        Voltar
+                    </Button>
 
 
             </View>
@@ -330,6 +338,11 @@ const styles = StyleSheet.create({
         width: 150,
         margin: 5,
         backgroundColor: 'green'
+    },
+    buttonGoback: {
+        width: 100,
+        margin: 5,
+        backgroundColor: 'red'
     }
 });
 
