@@ -2,6 +2,7 @@
 import { useState, } from 'react'
 import { StyleSheet, View, ScrollView } from 'react-native'
 import { TextInput, Button, Text, Card } from 'react-native-paper'
+import Constants from 'expo-constants';
 
 // material UI para o tratamento
 import {
